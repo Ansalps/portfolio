@@ -94,6 +94,9 @@
           <!-- <div class="col-lg-4" data-aos="fade-right">
             <img src="assets/img/profile-img.jpg" class="img-fluid" alt="">
           </div>  -->
+<!--           <div class="col-lg-4" data-aos="fade-right">
+            <img src="assets/img/profile-img.jpg" class="img-fluid" alt="">
+          </div> -->
           <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
             <h3>UI Designer  </h3>
             <p class="fst-italic">
@@ -603,20 +606,25 @@
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="name">Your Name</label>
-                  <input type="text" name="name" class="form-control" id="name" required>
+                  <input type="text" name="name" class="form-control" id="name" >
+                <span style="color: red;" id="name_error"></span>
+
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" required>
+                  <input type="email" class="form-control" name="email" id="email" >
+                  <span style="color: red;" id="email_error"></span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="name">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" required>
+                <input type="text" class="form-control" name="subject" id="subject" >
+                <span style="color: red;" id="subject_error"></span>
               </div>
               <div class="form-group">
                 <label for="name">Message</label>
-                <textarea class="form-control" name="message" rows="10" required></textarea>
+                <textarea class="form-control" name="message" id="message" rows="10" ></textarea>
+                <span style="color: red;" id="message_error"></span>
               </div>
               <!-- <div class="my-3">
                 <div class="loading">Loading</div>
@@ -665,7 +673,7 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script src="script.js"></script>
+  <!-- <script src="script.js"></script> -->
 </body>
 
 </html>

@@ -3,83 +3,76 @@
 * URL: https://bootstrapmade.com/php-email-form/
 * Author: BootstrapMade.com
 */
-(function () {
-  "use strict";
+const name = document.getElementById("name");
+const email = document.getElementById("email");
+const form = document.getElementById("submit-form");
+const subject = document.getElementById("subject");
+const message = document.getElementById("message");
 
-  let forms = document.querySelectorAll('.php-email-form');
+const name_error = document.getElementById("name_error");
+const email_error = document.getElementById("email_error");
+const subject_error = document.getElementById("subject_error");
+const message_error = document.getElementById("message_error");
 
-  forms.forEach( function(e) {
-    e.addEventListener('submit', function(event) {
-      event.preventDefault();
 
-      let thisForm = this;
-
-      let action = thisForm.getAttribute('action');
-      let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
+form.addEventListener("submit",(e)=>
+{
+  var email_check = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+  if(name.value === "" || name.value == null)
+  {
+      e.preventDefault();
+      name_error.innerHTML = "Name is required.";
       
-      if( ! action ) {
-        displayError(thisForm, 'The form action property is not set!');
-        return;
-      }
-      thisForm.querySelector('.loading').classList.add('d-block');
-      thisForm.querySelector('.error-message').classList.remove('d-block');
-      thisForm.querySelector('.sent-message').classList.remove('d-block');
-
-      let formData = new FormData( thisForm );
-
-      if ( recaptcha ) {
-        if(typeof grecaptcha !== "undefined" ) {
-          grecaptcha.ready(function() {
-            try {
-              grecaptcha.execute(recaptcha, {action: 'php_email_form_submit'})
-              .then(token => {
-                formData.set('recaptcha-response', token);
-                php_email_form_submit(thisForm, action, formData);
-              })
-            } catch(error) {
-              displayError(thisForm, error);
-            }
-          });
-        } else {
-          displayError(thisForm, 'The reCaptcha javascript API url is not loaded!')
-        }
-      } else {
-        php_email_form_submit(thisForm, action, formData);
-      }
-    });
-  });
-
-  function php_email_form_submit(thisForm, action, formData) {
-    fetch(action, {
-      method: 'POST',
-      body: formData,
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
-    })
-    .then(response => {
-      if( response.ok ) {
-        return response.text();
-      } else {
-        throw new Error(`${response.status} ${response.statusText} ${response.url}`); 
-      }
-    })
-    .then(data => {
-      thisForm.querySelector('.loading').classList.remove('d-block');
-      if (data.trim() == 'OK') {
-        thisForm.querySelector('.sent-message').classList.add('d-block');
-        thisForm.reset(); 
-      } else {
-        throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
-      }
-    })
-    .catch((error) => {
-      displayError(thisForm, error);
-    });
+  }
+  else{
+      name_error.innerHTML = "";
   }
 
-  function displayError(thisForm, error) {
-    thisForm.querySelector('.loading').classList.remove('d-block');
-    thisForm.querySelector('.error-message').innerHTML = error;
-    thisForm.querySelector('.error-message').classList.add('d-block');
+  if(!email.value.match(email_check))
+  {
+      e.preventDefault();
+      email_error.innerHTML = "Valid Email is required.";
   }
+  else{
+      email_error.innerHTML = "";
+  }
+  if(subject.value === "" || subject.value == null)
+  {
+      e.preventDefault();
+      subject_error.innerHTML = "subject is required.";
+  }
+  else{
+      subject_error.innerHTML = "";
+  }
+  if(message.value === "" || message.value == null)
+  {
+      e.preventDefault();
+      message_error.innerHTML = "message is required.";
+  }
+  else {
+      message_error.innerHTML = "";
+  }
+  if(message_error.innerHTML == "" && subject_error.innerHTML == "" && email_error.innerHTML == "" && name_error.innerHTML == "")
+  {
+    console.log("hi");
+    // $("#submit-form").submit((e)=>{
 
-})();
+      e.preventDefault()
+  
+      $.ajax({
+          url:"https://script.google.com/macros/s/AKfycbyqVUSmbZOlodNvHCKC3ERSaelxAa26m2bWrYsbbEimUupdqAgPTMYAuZgmEa3vKJzX/exec",
+          data:$("#submit-form").serialize(),
+          method:"post",
+          success:function (response){
+              alert("Form submitted successfully")
+              window.location.reload()
+              //window.location.href="https://google.com"
+          },
+          error:function (err){
+              alert("Something Error")
+  
+          }
+      })
+  // })
+  }
+})
